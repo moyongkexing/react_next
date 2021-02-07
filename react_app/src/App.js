@@ -2,54 +2,79 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  msgStyle1 = {
-    fontSize: "24px",
+  data = [
+    "this is list sample",
+    "これはリストのサンプルです。",
+    "配列をリストに変換します。"
+  ]
+
+  msgStyle = {
+    fontSize: "20px",
     color: "#900",
     margin: "20px 0px",
     padding: "5px",
-    borderBottom: "2px solid #900"
-  }
-  msgStyle1 = {
-    fontSize: "24px",
-    color: "white",
-    margin: "20px 0px",
-    padding: "5px",
-    borderBottom: "2px solid #900",
-    backgroundColor: "#900"
-  }
-  btnStyle = {
-    fontSize: "20pt",
-    padding: "0px 10px"
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
-      msg: "count start!",
-      flg: true,
+      list:this.data
     };
-    this.doAction = this.doAction.bind(this);
-  }
-
-  doAction() {
-    this.setState((state) => ({
-      counter: state.counter + 1,
-      msg: state.counter,
-      flg: !state.flg
-    }));
   }
 
   render() {
     return <div>
       <h1>React</h1>
-      {this.state.flg ?
-        <p style={this.msgStyle1}>count: {this.state.msg}</p>
-      :
-        <p style={this.msgStyle2}>{this.state.msg}です。</p>
-      }
-      <button style={this.btnStyle} onClick={this.doAction}>Click</button>
+      <h2 style={this.msgStyle}>Show List.</h2>
+      <List title="サンプル・リスト" data={this.data} />
     </div>;
+  }
+}
+
+class List extends Component {
+  number = 1;
+
+  title = {
+    fontSize: "20pt",
+    fontWeight: "bold",
+    color: "blue"
+  };
+
+  render() {
+    let data = this.props.data;
+    return (
+      <div>
+        <p style={this.title}>{this.props.title}</p>
+        <ul>
+          {data.map((item) =>
+            <Item number={this.number} value={item} key={this.number} />
+          )}
+        </ul>
+      </div>
+    );
+  }
+}
+
+class Item extends Component {
+  li = {
+    listStyleType: "square",
+    fontSize: "16pt",
+    color: "#06",
+    margin: "0px",
+    padding: "0px"
+  }
+  num = {
+    fontWeight: "bold",
+    color: "red"
+  }
+
+  render() {
+    return (
+      <li style={this.li}>
+        <span style={this.num}>「{this.props.number}」</span>
+        {this.props.value}
+      </li>
+    );
   }
 }
 export default App;
