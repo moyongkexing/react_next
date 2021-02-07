@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  data = [
-    "this is list sample",
-    "これはリストのサンプルです。",
-    "配列をリストに変換します。"
-  ]
+  input = '';
 
   msgStyle = {
     fontSize: "20px",
@@ -14,19 +10,41 @@ class App extends Component {
     margin: "20px 0px",
     padding: "5px",
   }
-
+  inputStyle = {
+    fontSize: "12pt",
+    padding: "5px"
+  }
   constructor(props) {
     super(props);
     this.state = {
-      list:this.data
+      message: "type your name:"
     };
+    this.doChange = this.doChange.bind(this)
+    this.doSubmit = this.doSubmit.bind(this)
+  }
+
+  doChange(event) {
+    this.input = event.target.value;
+  }
+
+  doSubmit(event) {
+    this.setState({
+      message: "Hello," + this.input
+    });
+    event.preventDefault();
   }
 
   render() {
     return <div>
       <h1>React</h1>
-      <h2 style={this.msgStyle}>Show List.</h2>
-      <List title="サンプル・リスト" data={this.data} />
+      <h2>{this.state.message}</h2>
+      <form onSubmit={this.doSubmit}>
+        <label>
+          <span style={this.inputStyle}></span>Message:
+          <input type="text" style={this.inputStyle} onChange={this.doChange} />
+        </label>
+        <input type="submit" style={this.inputStyle} value="Click" />
+      </form>
     </div>;
   }
 }
