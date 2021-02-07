@@ -10,32 +10,31 @@
 <body>
   <h1>React</h1>
   <div id="root">wait...</div>
+
+
   <script type="text/babel">
     let dom = document.querySelector('#root');
-    let message = "新しいメッセージです。";
-    const msg_s = {
-      fontSize:"20pt",
-      fontWeight:"bold",
-      color:"red",
-      border:"2px solid blue"
+    const msg = {
+      fontSize: "20pt",
+      fontWeight: "bold",
+      padding: "10px",
+      border: "5px solid yellow"
+    };
+
+    class Hello extends React.Component {
+      constructor(props) {
+        super(props);
+      }
+
+      render() {
+        return <p style={msg}>Hello!!</p>
+      }
     }
 
-    let printMsg = function(msg, size, color) {
-      const style = {
-        fontSize: size + "pt",
-        fontWeight: "700",
-        color: color,
-        border: "1px solid " + color
-      }
-      return <p style={style}>{msg}</p>
-    }
+
     let el = (
-      <div>
-        {printMsg('最初のメッセージ', 30, "#ddd")}
-        {printMsg('次のメッセージです', 20, "#aaa")}
-        {printMsg('最後のメッセージでした', 14, "#333")}
-      </div>
-    );
+      <Hello />
+    )
     ReactDOM.render(el, dom);
   </script>
 </body>
