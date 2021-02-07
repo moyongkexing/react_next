@@ -15,13 +15,25 @@
     let message = "新しいメッセージです。";
     const msg_s = {
       fontSize:"20pt",
+      fontWeight:"bold",
       color:"red",
-      border:"1px solid blue"
+      border:"2px solid blue"
     }
 
+    let printMsg = function(msg, size, color) {
+      const style = {
+        fontSize: size + "pt",
+        fontWeight: "700",
+        color: color,
+        border: "1px solid " + color
+      }
+      return <p style={style}>{msg}</p>
+    }
     let el = (
       <div>
-        <p style={msg_s}>{message}</p>
+        {printMsg('最初のメッセージ', 30, "#ddd")}
+        {printMsg('次のメッセージです', 20, "#aaa")}
+        {printMsg('最後のメッセージでした', 14, "#333")}
       </div>
     );
     ReactDOM.render(el, dom);
