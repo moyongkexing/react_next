@@ -1,46 +1,74 @@
 import React, { Component } from 'react';
 import './App.css';
+import { connect } from 'react-redux';
 
-let theme = {
-  light: {
-    backgroundColor: "#eef",
-    color: "#006",
-    padding: "10px"
-  },
-  dark: {
-    backgroundColor: "#006",
-    color: "#eef",
-    padding: "10px"
-  }
+function mappingState(state) {
+  return state;
 }
-const ThemeContext = React.createContext(theme.dark);
 
 class App extends Component {
-  static contextType = ThemeContext;
-
-  render() {
-    return <div style={this.context}>
-      <Title value="Content Page"/>
-      <Message value="this is a content sample."/>
-      <Message value="これはテーマのサンプルです。"/>
-    </div>;
+  constructor(props) {
+    super(props);
   }
-}
 
-class Title extends Component {
-  static contextType = ThemeContext;
   render() {
     return (
-      <h2 style={this.context}>{this.props.value} </h2>
-    )
+      <div>
+        <h1>Redux</h1>
+        <Message />
+        <Button />
+      </div>
+    );
   }
 }
+
+App = connect()(App);
+
 class Message extends Component {
-  static contextType = ThemeContext;
+  style = {
+    fontSize: "20pt",
+    padding: "20px 5px"
+  }
+
   render() {
     return (
-      <p style={this.context}>{this.props.value} </p>
+      <p style={this.style}>
+        {this.props.message}: {this.props.counter}
+      </p>
+    );
+  }
+}
+
+Message = connect(mappingState)(Message);
+
+class Button extends Component {
+  style = {
+    fontSize: "16pt",
+    padding: "5px 10px"
+  }
+
+  constructor(props) {
+    super(props);
+    this.doAction = this.doAction.bind(this);
+  }
+
+  doAction(e) {
+    if (e.shiftKey) {
+      this.props.dispatch({ type: "DECREMENT"});
+    } else {
+      this.props.dispatch({ type: "INCREMENT"});
+    }
+  }
+
+  render() {
+    return (
+      <button style={this.style} onClick={this.doAction}>
+        Click
+      </button>
     )
   }
 }
+
+Button = connect()(Button);
+
 export default App;
